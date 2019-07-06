@@ -107,21 +107,21 @@ Now we need to import the pretrained network (in this case MobileNetV2) and save
     
  You should see the .h5 file in your project directory on your mounted drive now. 
  
- Now we need to freeze the graph:
+ Now we need to freeze the graph. In a new cell run:
  
     import tensorflow as tf
     from tensorflow.python.framework import graph_io
     from tensorflow.keras.models import load_model
-    
+
     tf.keras.backend.clear_session()
-    
+
     def freeze_graph(graph, session, output, save_pb_dir=root_path, save_pb_name='frozen_model.pb', save_pb_as_text=False):
-    with graph.as_default():
+      with graph.as_default():
         graphdef_inf = tf.graph_util.remove_training_nodes(graph.as_graph_def())
         graphdef_frozen = tf.graph_util.convert_variables_to_constants(session, graphdef_inf, output)
         graph_io.write_graph(graphdef_frozen, save_pb_dir, save_pb_name, as_text=save_pb_as_text)
         return graphdef_frozen
- 
+
     tf.keras.backend.set_learning_phase(0) 
 
     model = load_model(f'{root_path}/keras_model.h5')
@@ -135,3 +135,49 @@ Now we need to import the pretrained network (in this case MobileNetV2) and save
     print(input_names, output_names)
 
     frozen_graph = freeze_graph(session.graph, session, [out.op.name for out in model.outputs], save_pb_dir=root_path)
+    
+However, we need to convert the graph using TensorRT (the graph will be optimized to run on the nano). In a new cell run:
+
+    import tensorflow.contrib.tensorrt as trt
+
+    trt_graph = trt.create_inference_graph(
+        input_graph_def=frozen_graph,
+        outputs=output_names,
+        max_batch_size=1,
+        max_workspace_size_bytes=1 << 25,
+        precision_mode='FP16',
+        minimum_segment_size=50
+    )
+    
+We now need to transfer the trt graph file to the nano. You can download it to the development machine by right clicking the file in the file browser and selecing download. We will transfer the file to the nano using scp (secure copy). Go back to your terminal window. If you have a ssh session running in your terminal exit it:
+
+    $ exit
+    
+Transfer the file to the jetson and put it in the Downloads directory
+
+    $ scp /home/your_username/Downloads/trt_graph.pb your_jeston_username@jetson_ip:~/Downloads
+    
+If you ssh back into the jetson you should see the file in the downloads directory now:
+
+    $ ssh your_nano_username@your_nano_ip
+    $ ls ~/Downloads
+    
+It would be nice to be able to run jetson code using jupyter lab and access it from the development machine. We can do this by forwarding the jupyter port. Exit the current SSH session and start a new one, but this time forward the jupyter port on your remote jetson (8888) to another port on the development box. 
+
+    $ ssh -L 8000:localhost:8888 your_jetson_username@your_jetson_ip
+    
+This allows us to access the jupyter lab server running on the jetson (port 8888) on our development machine (port 8000). Its common to use different port numbers for the remote and development machines. Lets make a directory to store the project files on the jetson and move the trt file to this directory:
+
+    $ mkdir ~/Documents/mobile_net_project
+    $ mv ~/Downloads/trt_graph.pb ~/Documents/mobile_net_project
+    
+
+We need to start the jupyter server on the jetson in this new directory. Be sure and switch to your virtual env. Since we wont be using a browser on the jetson, we can pass in the --no-browser-flag:
+
+    $ cd ~/Documents/mobile_net_project
+    $ workon your_environment_name
+    $ jupyter lab --no-browser
+    
+In the browser of your development machine, navigate to ```http://localhost:8000``` and you should see the jupyter lab running with your trt file in the left side bar. Create a new python 3 notebook by pressing the python 3 button in the main page. 
+
+
