@@ -49,7 +49,7 @@ Make sure you are on the virtual environment you created
 
     $ workon your_environment_name
 
-You should see ```(your_environment_name)``` in your terminal prompt. This indicates the current virtual environment. 
+You should see ```(your_environment_name)``` in your terminal prompt. This indicates the current virtual environment. Whenever you install python packages, make sure you are using the virtual environment before running pip.
 
 ## Installing Tensorflow 
 
@@ -78,8 +78,34 @@ If no errors are displayed tensorflow was installed correctly. Exit the the inte
 
 ## Install Jupyterlab
 
-Jupyter lab is a browser based IDE-like experience for interactive jupyter notebooks. 
+Jupyter lab is a browser based IDE-like experience for interactive jupyter notebooks. It will be used to run code on the nano in the browser of the development machine
 
     $ pip3 install jupyterlab
     
+# Building the Keras Model
+
+The following steps are taken from [here](https://www.dlology.com/blog/how-to-run-keras-model-on-jetson-nano/) and are outline below. 
+
+## Google Colaboratory
+
+Create a new Python 3 [google colab](https://colab.research.google.com/) notebook (File -> New Python 3 Notebook). You will also want to enable GPU acceleration (Runtime -> Change runtime type) and select GPU under the Hardware accelerator drop down menu.
+
+We will want to be able to save and read things from our google drive, so the first step is to setup our notebook to use drive. You will want to create a project folder in your drive to store any files we need. After creating the folder in your drive, go back to the colab notebook.  In a new cell, insert the following code to mount your google drive:
+
+    from google.colab import drive
+    drive.mount('/content/gdrive')
+    
+Press shift+enter to run the cell, and a link will be output. Go to the link and cipy the authorization code to complete the mounting process. You can use the left sidebar to access the files tab, and navigate to your project folder you created in your drive directory. Add a variable to store the path to the project folder using a new cell:
+
+    root_path = '/content/gdrive/My Drive/your_project_folder'
+    
+Now we need to import the pretrained network (in this case MobileNetV2) and save the model as a .h5 file. In a new cell run:
+
+    from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2 as Net
+    model = Net(weights='imagenet')
+    model.save(f'{root_path}/keras_model.h5')
+    
+ You should see the .h5 file in your project directory on your mounted drive now. 
+ 
+ 
  
