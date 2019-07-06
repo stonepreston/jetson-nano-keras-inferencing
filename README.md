@@ -39,7 +39,7 @@ You should see ```(your_environment_name)``` in your terminal prompt. This indic
 
 ## Installing Tensorflow 
 
-Installation steps are found [here](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html) and are detailed below.
+Installation steps are found [here](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html) and are listed below.
 
 ### Install tensorflow system dependencies
 
@@ -52,3 +52,12 @@ Installation steps are found [here](https://docs.nvidia.com/deeplearning/framewo
 ### Install the latest version of tensorflow-gpu for the nano. This is a special NVIDIA release for the jetson.
 
     $ pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
+    
+### Verify the installation using the python interpreter
+    $ python3
+    >>> import tensorflow
+    
+If no errors are displayed tensorflow was installed correctly. Exit the the interpreter
+
+   >>> exit()
+
