@@ -41,14 +41,14 @@ You should see ```(your_environment_name)``` in your terminal prompt. This indic
 
 Installation steps are found [here](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html) and are detailed below.
 
-# Install tensorflow system dependencies
+### Install tensorflow system dependencies
 
     $ sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev
 
-# Install tensorflow python dependencies
+### Install tensorflow python dependencies
 
     $ pip3 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta
     
-# Install the latest version of tensorflow-gpu for the nano. This is a special NVIDIA release for the jetson.
+### Install the latest version of tensorflow-gpu for the nano. This is a special NVIDIA release for the jetson.
 
     $ pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
