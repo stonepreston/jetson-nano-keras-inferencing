@@ -9,11 +9,15 @@ Take note of the ip address of whatever network interface you are using (eth, wl
 
 On your development machine, open a terminal window and ssh into nano. Enter your password when prompted.
 
-    $ ssh your_username@your_nano_ip
+    $ ssh your_nano_username@your_nano_ip
     
+You will now be connected to your nano inside the terminal window. 
+
 ## Python Virtual Environment Setup
 
-### Install and upgrade pip (python package manager)
+We need to setup python on the nano. Using virtual environments is best practice to help with dependancy management. In this section, we will install a python package manager (pip) and setup a virtual environment.
+
+### Install and upgrade pip 
 
     $ sudo apt-get install python3-pip
     $ sudo pip3 install -U pip
