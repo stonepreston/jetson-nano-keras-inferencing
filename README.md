@@ -1,7 +1,13 @@
 
 # Nano Setup
 
-I find it easier to work on a development machine (not the nano) and ssh into the nano when necessary. On your development machine, open a terminal window and ssh into nano. Enter your password when prompted
+I find it easier to work on a development machine (not the nano) and ssh into the nano when necessary. You will need to obtain the ip address of your nano. On the nano, open a terminal window and run the following command. 
+
+    $ ifconfig
+    
+Take note of the ip address of whatever network interface you are using (eth, wlan, etc)
+
+On your development machine, open a terminal window and ssh into nano. Enter your password when prompted.
 
     $ ssh your_username@your_nano_ip
     
