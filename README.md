@@ -1,7 +1,11 @@
 
-## Python Virtual Environment Setup
+# Nano Setup
 
-Open a terminal window.
+I find it easier to work on a development machine (not the nano) and ssh into the nano when necessary. On your development machine, open a terminal window and ssh into nano. Enter your password when prompted
+
+    $ ssh your_username@your_nano_ip
+    
+## Python Virtual Environment Setup
 
 ### Install and upgrade pip (python package manager)
 
@@ -61,3 +65,9 @@ If no errors are displayed tensorflow was installed correctly. Exit the the inte
 
     >>> exit()
 
+
+## Install Jupyterlab
+
+    $ pip3 install jupyterlab
+    
+ 
