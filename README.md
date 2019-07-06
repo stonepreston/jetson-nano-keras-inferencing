@@ -78,6 +78,8 @@ If no errors are displayed tensorflow was installed correctly. Exit the the inte
 
 ## Install Jupyterlab
 
+Jupyter lab is a browser based IDE-like experience for interactive jupyter notebooks. 
+
     $ pip3 install jupyterlab
     
  
