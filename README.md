@@ -59,5 +59,5 @@ Installation steps are found [here](https://docs.nvidia.com/deeplearning/framewo
     
 If no errors are displayed tensorflow was installed correctly. Exit the the interpreter
 
-   >>> exit()
+    >>> exit()
 
