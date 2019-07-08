@@ -13,43 +13,36 @@ On your development machine, open a terminal window and ssh into nano. Enter you
     
 You will now be connected to your nano inside the terminal window. 
 
+Create a project directory for your tensorflow project.
+
+   $ cd 
+   $ mkdir mobile_net_test
+
 ## Python Virtual Environment Setup
 
-We need to setup python on the nano. Using virtual environments is best practice to help with dependancy management. In this section, we will install a python package manager (pip) and setup a virtual environment.
+We need to setup python on the nano. Using virtual environments is best practice to help with dependancy management. In this section, we will install a python package manager (pip) and setup a virtual environment using venv.
 
 ### Install and upgrade pip 
 
-    $ sudo apt-get install python3-pip
-    $ sudo pip3 install -U pip
+    $ python3 -m pip install --user --upgrade pip
     
-### Install virtualenv and virtualenv wrapper to help manage different python environments
+You can check whether it installed successfully using the command below:
 
-    $ sudo pip install virtualenv virtualenvwrapper
+    $ python3 -m pip --version
     
-### Configure user profile to use virtualenv
+Install venv
 
-    $ nano ~/.bashrc
+    $ sudo apt-get install python3-venv
     
-Add the following lines to the end of the .bashrc file
-
-    # virtualenv and virtualenvwrapper
-    export WORKON_HOME=$HOME/.virtualenvs
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-    source /usr/local/bin/virtualenvwrapper.sh
-
-Close the terminal window and open a new terminal. This will allow the changes to the bashrc file to take effect. Alternatively, you can run 
-
-    $ source ~/.bashrc
-
-Now create a new virtual environment
+Now create a new virtual environment called env
+    $ cd mobile_net_test
+    $ python3 -m venv env
     
-    $ mkvirtualenv your_environment_name -p python3
-    
-Make sure you are on the virtual environment you created 
+Activate the virtual environment
 
-    $ workon your_environment_name
+    $ source env/bin/activate
 
-You should see ```(your_environment_name)``` in your terminal prompt. This indicates the current virtual environment. Whenever you install python packages, make sure you are using the virtual environment before running pip.
+You should see ```(env)``` in your terminal prompt. This indicates the current virtual environment. Whenever you install python packages, make sure you are using the virtual environment before running pip.
 
 ## Installing Tensorflow 
 
