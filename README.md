@@ -186,7 +186,7 @@ We need to start the jupyter server on the jetson in this new directory. Be sure
     $ source env/bin/activate
     $ jupyter lab --no-browser
     
-Copy and paste the link into the address bar of a browser on your developmachine. Change the port number from 8888 to 8000 and hit enter. You should see the jupyter lab running with your project files in the left side bar. Create a new python 3 notebook by pressing the python 3 button in the main page. 
+Copy and paste the link into the address bar of a browser on your development machine. Change the port number from 8888 to 8000 and hit enter. You should see the jupyter lab running with your project files in the left side bar. Create a new python 3 notebook by pressing the python 3 button in the main page. 
 
 ## Importing the Graph
 
