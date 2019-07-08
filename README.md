@@ -138,16 +138,16 @@ frozen_graph = freeze_graph(session.graph, session, [out.op.name for out in mode
 However, we need to convert the graph using TensorRT (the graph will be optimized to run on the nano). In a new cell run:
 
 ```python
-    import tensorflow.contrib.tensorrt as trt
+import tensorflow.contrib.tensorrt as trt
 
-    trt_graph = trt.create_inference_graph(
-        input_graph_def=frozen_graph,
-        outputs=output_names,
-        max_batch_size=1,
-        max_workspace_size_bytes=1 << 25,
-        precision_mode='FP16',
-        minimum_segment_size=50
-    )
+trt_graph = trt.create_inference_graph(
+    input_graph_def=frozen_graph,
+    outputs=output_names,
+    max_batch_size=1,
+    max_workspace_size_bytes=1 << 25,
+    precision_mode='FP16',
+    minimum_segment_size=50
+)
 ```
     
 We now need to transfer the trt graph file to the nano. You can download it to the development machine by right clicking the file in the file browser and selecing download. We will transfer the file to the nano using scp (secure copy). Go back to your terminal window. If you have a ssh session running in your terminal exit it:
