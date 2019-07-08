@@ -85,8 +85,10 @@ Create a new Python 3 [google colab](https://colab.research.google.com/) noteboo
 
 We will want to be able to save and read things from our google drive, so the first step is to setup our notebook to use drive. You will want to create a project folder in your drive to store any files we need. After creating the folder in your drive, go back to the colab notebook.  In a new cell, insert the following code to mount your google drive:
 
-    from google.colab import drive
-    drive.mount('/content/gdrive')
+```python
+from google.colab import drive
+drive.mount('/content/gdrive')
+```
     
 Press shift+enter to run the cell, and a link will be output. Go to the link and cipy the authorization code to complete the mounting process. You can use the left sidebar to access the files tab, and navigate to your project folder you created in your drive directory. Add a variable to store the path to the project folder using a new cell:
 
