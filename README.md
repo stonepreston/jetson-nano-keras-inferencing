@@ -15,8 +15,8 @@ You will now be connected to your nano inside the terminal window.
 
 Create a project directory for your tensorflow project.
 
-   $ cd 
-   $ mkdir mobile_net_test
+    $ cd 
+    $ mkdir mobile_net_test
 
 ## Python Virtual Environment Setup
 
