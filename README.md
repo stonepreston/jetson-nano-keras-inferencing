@@ -77,7 +77,7 @@ Jupyter lab is a browser based IDE-like experience for interactive jupyter noteb
     
 # Building the Keras Model
 
-The following steps are taken from [here](https://www.dlology.com/blog/how-to-run-keras-model-on-jetson-nano/) and are outline below. 
+The following steps are taken from [here](https://www.dlology.com/blog/how-to-run-keras-model-on-jetson-nano/) and are outlined below. 
 
 ## Google Colaboratory
 
