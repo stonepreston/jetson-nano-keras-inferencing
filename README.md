@@ -16,7 +16,7 @@ You will now be connected to your nano inside the terminal window.
 Create a project directory for your tensorflow project.
 
     $ cd 
-    $ mkdir mobile_net_test
+    $ mkdir your_project_folder
 
 ## Python Virtual Environment Setup
 
@@ -105,6 +105,8 @@ model.save(f'{root_path}/keras_model.h5')
 
  You should see the .h5 file in your project directory on your mounted drive now. 
  
+ ## Freezing the graph
+ 
  Now we need to freeze the graph. In a new cell run:
  
  ```python
@@ -149,36 +151,44 @@ trt_graph = trt.create_inference_graph(
     minimum_segment_size=50
 )
 ```
-    
+
+# Inferencing on the Nano
+
+## Transfer the files
 We now need to transfer the trt graph file to the nano. You can download it to the development machine by right clicking the file in the file browser and selecing download. We will transfer the file to the nano using scp (secure copy). Go back to your terminal window. If you have a ssh session running in your terminal exit it:
 
     $ exit
     
-Transfer the file to the jetson and put it in the Downloads directory
+Transfer the file to the jetson and put it in the project directory
 
-    $ scp /home/your_username/Downloads/trt_graph.pb your_jeston_username@jetson_ip:~/Downloads
+    $ scp /home/your_username/Downloads/trt_graph.pb your_jeston_username@jetson_ip:~/your_project_folder
     
-If you ssh back into the jetson you should see the file in the downloads directory now:
+We also want to transfer an image to perform the inference on. Download a google image of an elephant. Any image should do. Transfer it to the project directory using scp
+
+    $ scp /home/your_username/Downloads/elephant.jpg your_jeston_username@jetson_ip:~/your_project_folder
+
+    
+If you ssh back into the jetson you should see the file in the project directory now:
 
     $ ssh your_nano_username@your_nano_ip
-    $ ls ~/Downloads
-    
-It would be nice to be able to run jetson code using jupyter lab and access it from the development machine. We can do this by forwarding the jupyter port. Exit the current SSH session and start a new one, but this time forward the jupyter port on your remote jetson (8888) to another port on the development box. 
+    $ ls ~/your_project_folder
+
+## Start Jupyter Lab
+It would be nice to be able to run jetson code using jupyter lab and access it from the development machine. We can do this by forwarding the jupyter port. Exit the current SSH session and start a new one, but this time forward the jupyter port on your remote jetson (8888) to another port on the development box (8000). 
 
     $ ssh -L 8000:localhost:8888 your_jetson_username@your_jetson_ip
     
-This allows us to access the jupyter lab server running on the jetson (port 8888) on our development machine (port 8000). Its common to use different port numbers for the remote and development machines. Lets make a directory to store the project files on the jetson and move the trt file to this directory:
-
-    $ mkdir ~/Documents/mobile_net_project
-    $ mv ~/Downloads/trt_graph.pb ~/Documents/mobile_net_project
+This allows us to access the jupyter lab server running on the jetson (port 8888) on our development machine (port 8000). Its common to use different port numbers for the remote and development machines. 
     
-
 We need to start the jupyter server on the jetson in this new directory. Be sure and switch to your virtual env. Since we wont be using a browser on the jetson, we can pass in the --no-browser-flag:
 
-    $ cd ~/Documents/mobile_net_project
-    $ workon your_environment_name
+    $ cd ~/your_project_folder
+    $ source env/bin/activate
     $ jupyter lab --no-browser
     
-In the browser of your development machine, navigate to ```http://localhost:8000``` and you should see the jupyter lab running with your trt file in the left side bar. Create a new python 3 notebook by pressing the python 3 button in the main page. 
+Copy and paste the link into the address bar of a browser on your developmachine. Change the port number from 8888 to 8000 and hit enter. You should see the jupyter lab running with your project files in the left side bar. Create a new python 3 notebook by pressing the python 3 button in the main page. 
+
+## Importing the Graph
+
 
 
