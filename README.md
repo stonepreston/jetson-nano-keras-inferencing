@@ -92,47 +92,52 @@ drive.mount('/content/gdrive')
     
 Press shift+enter to run the cell, and a link will be output. Go to the link and cipy the authorization code to complete the mounting process. You can use the left sidebar to access the files tab, and navigate to your project folder you created in your drive directory. Add a variable to store the path to the project folder using a new cell:
 
-    root_path = '/content/gdrive/My Drive/your_project_folder'
-    
+```python
+root_path = '/content/gdrive/My Drive/your_project_folder'
+``` 
 Now we need to import the pretrained network (in this case MobileNetV2) and save the model as a .h5 file. In a new cell run:
 
-    from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2 as Net
-    model = Net(weights='imagenet')
-    model.save(f'{root_path}/keras_model.h5')
-    
+```python
+from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2 as Net
+model = Net(weights='imagenet')
+model.save(f'{root_path}/keras_model.h5')
+```
+
  You should see the .h5 file in your project directory on your mounted drive now. 
  
  Now we need to freeze the graph. In a new cell run:
  
-    import tensorflow as tf
-    from tensorflow.python.framework import graph_io
-    from tensorflow.keras.models import load_model
+ ```python
+import tensorflow as tf
+from tensorflow.python.framework import graph_io
+from tensorflow.keras.models import load_model
 
-    tf.keras.backend.clear_session()
+tf.keras.backend.clear_session()
 
-    def freeze_graph(graph, session, output, save_pb_dir=root_path, save_pb_name='frozen_model.pb', save_pb_as_text=False):
-      with graph.as_default():
-        graphdef_inf = tf.graph_util.remove_training_nodes(graph.as_graph_def())
-        graphdef_frozen = tf.graph_util.convert_variables_to_constants(session, graphdef_inf, output)
-        graph_io.write_graph(graphdef_frozen, save_pb_dir, save_pb_name, as_text=save_pb_as_text)
-        return graphdef_frozen
+def freeze_graph(graph, session, output, save_pb_dir=root_path, save_pb_name='frozen_model.pb', save_pb_as_text=False):
+  with graph.as_default():
+    graphdef_inf = tf.graph_util.remove_training_nodes(graph.as_graph_def())
+    graphdef_frozen = tf.graph_util.convert_variables_to_constants(session, graphdef_inf, output)
+    graph_io.write_graph(graphdef_frozen, save_pb_dir, save_pb_name, as_text=save_pb_as_text)
+    return graphdef_frozen
 
-    tf.keras.backend.set_learning_phase(0) 
+tf.keras.backend.set_learning_phase(0) 
 
-    model = load_model(f'{root_path}/keras_model.h5')
+model = load_model(f'{root_path}/keras_model.h5')
 
-    session = tf.keras.backend.get_session()
+session = tf.keras.backend.get_session()
 
-    input_names = [t.op.name for t in model.inputs]
-    output_names = [t.op.name for t in model.outputs]
+input_names = [t.op.name for t in model.inputs]
+output_names = [t.op.name for t in model.outputs]
 
-    # Prints input and output nodes names, take notes of them.
-    print(input_names, output_names)
+# Prints input and output nodes names, take notes of them.
+print(input_names, output_names)
 
-    frozen_graph = freeze_graph(session.graph, session, [out.op.name for out in model.outputs], save_pb_dir=root_path)
-    
+frozen_graph = freeze_graph(session.graph, session, [out.op.name for out in model.outputs], save_pb_dir=root_path)
+``` 
 However, we need to convert the graph using TensorRT (the graph will be optimized to run on the nano). In a new cell run:
 
+```python
     import tensorflow.contrib.tensorrt as trt
 
     trt_graph = trt.create_inference_graph(
@@ -143,6 +148,7 @@ However, we need to convert the graph using TensorRT (the graph will be optimize
         precision_mode='FP16',
         minimum_segment_size=50
     )
+```
     
 We now need to transfer the trt graph file to the nano. You can download it to the development machine by right clicking the file in the file browser and selecing download. We will transfer the file to the nano using scp (secure copy). Go back to your terminal window. If you have a ssh session running in your terminal exit it:
 
