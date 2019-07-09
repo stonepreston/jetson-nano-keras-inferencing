@@ -1,7 +1,7 @@
 
 # Nano Setup
 
-I find it easier to work on a development machine and ssh into the nano when necessary. You will need to obtain the ip address of your nano. On the nano, open a terminal window and run the following command.
+I find it easier to work on a desktop development machine and ssh into the nano when necessary (The nano UI can be a bit sluggish sometimes, so it's easier to work on a regular computer if you can) You will need to obtain the ip address of your nano. On the nano, open a terminal window and run the following command.
 
     $ ifconfig
     
