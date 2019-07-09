@@ -86,7 +86,7 @@ The following steps are taken from [here](https://www.dlology.com/blog/how-to-ru
 
 ## Google Colaboratory
 
-Create a new Python 3 google colab notebook (File -> New Python 3 Notebook). You may also want to enable GPU acceleration (Runtime -> Change runtime type) and select GPU under the Hardware accelerator drop down menu. (It won’t affect anything since we are using a pre trained model, but it’s handy to know where that option is)
+Create a new Python 3 [google colab](https://colab.research.google.com) notebook (File -> New Python 3 Notebook). You may also want to enable GPU acceleration (Runtime -> Change runtime type) and select GPU under the Hardware accelerator drop down menu. (It won’t affect anything since we are using a pre trained model, but it’s handy to know where that option is)
 
 Google colab notebooks consist of individual cells of code that can be run by pressing shift+enter while inside the cell you want to run. In the next few steps, after you finish typing the code into the cell, always run it directly after by pressing shift+enter. If you need to add a new cell you can use the toolbar to select insert -> code cell
 
