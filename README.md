@@ -88,7 +88,7 @@ The following steps are taken from [here](https://www.dlology.com/blog/how-to-ru
 
 Create a new Python 3 [google colab](https://colab.research.google.com) notebook (File -> New Python 3 Notebook). You may also want to enable GPU acceleration (Runtime -> Change runtime type) and select GPU under the Hardware accelerator drop down menu. (It won’t affect anything since we are using a pre trained model, but it’s handy to know where that option is)
 
-Google colab notebooks consist of individual cells of code that can be run by pressing shift+enter while inside the cell you want to run. In the next few steps, after you finish typing the code into the cell, always run it directly after by pressing shift+enter. If you need to add a new cell you can use the toolbar to select insert -> code cell
+Google colab notebooks and jupyter notebooks consist of individual cells of code that can be run by pressing shift+enter while inside the cell you want to run. In the next few steps, after you finish typing the code into the cell, always run it directly after by pressing shift+enter. If you need to add a new cell you can use the toolbar to select insert -> code cell. You can move cells up and down using the toolbar as well. 
 
 We need the tensorflow version on our colab notebook to match the version we have on our nano. In a new cell add the following code. Insert the version number (without quotes) that was output from your nano in where PUT_VERSION_HERE is:
 
@@ -122,7 +122,7 @@ model.save(f'{root_path}/keras_model.h5')
 
  You should see the .h5 file in your project directory on your mounted drive now. 
  
- ## Freezing the graph
+ ### Freezing the graph
  
  Now we need to freeze the graph. In a new cell run:
  
