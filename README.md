@@ -271,7 +271,7 @@ output_tensor = tf_sess.graph.get_tensor_by_name(output_tensor_name)
 ```
 ## Importing the image and making a prediction
 
-Run the following code in a new cell
+Run the following code in a new cell. You will need to update the line that sets the image path to your image name. 
 
 ```python
 from tensorflow.keras.preprocessing import image
