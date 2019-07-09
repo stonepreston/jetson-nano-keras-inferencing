@@ -278,7 +278,7 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input, decode_predictions
 import numpy as np
 
-# Optional image to test model prediction.
+# Change the file name to match yours
 img_path = './elephant.jpeg'
 
 img = image.load_img(img_path, target_size=image_size[:2])
