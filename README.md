@@ -65,7 +65,7 @@ Installation steps are found [here](https://docs.nvidia.com/deeplearning/framewo
     
 If you have previously run this command before creating a virtual environment, you may get a not found for url error when installing tensorflow. In that case try running pip without caching:
 
-   $ pip3 install --no-cache-dir --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
+    $ pip3 install --no-cache-dir --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
     
 ### Verify the installation using the python interpreter
 
