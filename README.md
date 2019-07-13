@@ -76,7 +76,30 @@ If you have previously run this command before creating a virtual environment, y
 Write down the full version number, you will need it in a second. Exit the interpreter
 
     >>> exit()
+    
+## TensorRT Setup
 
+To speed up inferencing, we can create convert the tensorflow model for use with TensorRT. We need to add TensorRT and uff to our virtual env. They are already installed at the system level, so we can create ssymlink from the system paths to our virtual environment. To find the TensorRT and uff paths, use the python3 interpreter (deactivate your virtual environment first)
+
+    $ deactivate
+    $ python3
+    >>> import tensorrt
+    >>> import uff
+    >>> tensorrt.__path__
+    >>> uff.__path__
+    >>> exit()
+
+Take note of the paths. Now activate the virtual env and create the symlinks
+
+    $ source env/bin/activate
+    $ ln -s insert_TRT_path_here $VIRTUAL_ENV/lib/insert_your_python_here/site-packages/
+    $ ln -s insert_uff_path_here $VIRTUAL_ENV/lib/insert_your_python_here/site-packages/
+    
+On my machine, the commands look like this:
+
+    $ source env/bin/activate
+    $ ln -s /usr/lib/python3.6/dist-packages/tensorrt $VIRTUAL_ENV/lib/python3.6/site-packages/
+    $ ln -s /usr/lib/python3.6/dist-packages/uff $VIRTUAL_ENV/lib/python3.6/site-packages/
 
 ## Install Jupyterlab
 
