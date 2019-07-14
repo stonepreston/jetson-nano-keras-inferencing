@@ -79,14 +79,16 @@ Write down the full version number, you will need it in a second. Exit the inter
     
 ## TensorRT Setup
 
-To speed up inferencing, we can create convert the tensorflow model for use with TensorRT. We need to add TensorRT and uff to our virtual env. They are already installed at the system level, so we can create ssymlink from the system paths to our virtual environment. To find the TensorRT and uff paths, use the python3 interpreter (deactivate your virtual environment first)
+To speed up inferencing, we can create convert the tensorflow model for use with TensorRT. We need to add TensorRT, uff, and graphsurgeon to our virtual env. They are already installed at the system level, so we can create symlinks from the system paths to our virtual environment. To find the TensorRT and uff paths, use the python3 interpreter (deactivate your virtual environment first)
 
     $ deactivate
     $ python3
     >>> import tensorrt
     >>> import uff
+    >>> import graphsurgeon
     >>> tensorrt.__path__
     >>> uff.__path__
+    >>> graphsurgeon.__path__
     >>> exit()
 
 Take note of the paths. Now activate the virtual env and create the symlinks
@@ -94,12 +96,16 @@ Take note of the paths. Now activate the virtual env and create the symlinks
     $ source env/bin/activate
     $ ln -s insert_TRT_path_here $VIRTUAL_ENV/lib/insert_your_python_here/site-packages/
     $ ln -s insert_uff_path_here $VIRTUAL_ENV/lib/insert_your_python_here/site-packages/
+    $ ln -s insert_graphsurgeon_path_here $VIRTUAL_ENV/lib/insert_your_python_here/site-packages/
+
     
 On my machine, the commands look like this:
 
     $ source env/bin/activate
     $ ln -s /usr/lib/python3.6/dist-packages/tensorrt $VIRTUAL_ENV/lib/python3.6/site-packages/
     $ ln -s /usr/lib/python3.6/dist-packages/uff $VIRTUAL_ENV/lib/python3.6/site-packages/
+    $ ln -s /usr/lib/python3.6/dist-packages/graphsurgeon $VIRTUAL_ENV/lib/python3.6/site-packages/
+
 
 ## Install Jupyterlab
 
@@ -304,6 +310,7 @@ Run the following code in a new cell. You will need to update the line that sets
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input, decode_predictions
 import numpy as np
+import PIL
 
 # Change the file name to match yours
 img_path = './elephant.jpeg'
@@ -341,5 +348,9 @@ fps = 1 / mean_delta
 print('average(sec):{:.2f},fps:{:.2f}'.format(mean_delta, fps))
 ```
 I was running at around 30 fps on my nano. 
+
+### Alternative Approach Using UFF
+
+   $ python /usr/lib/python3.6/dist-packages/uff/bin/convert_to_uff.py -o graph.uff frozen_model.pb 
 
 
