@@ -351,6 +351,34 @@ I was running at around 30 fps on my nano.
 
 ### Alternative Approach Using UFF
 
+Convert frozen model to uff using conver_to_uff script
+
    $ python /usr/lib/python3.6/dist-packages/uff/bin/convert_to_uff.py -o graph.uff frozen_model.pb 
+   
+Take note of the automatically deduced inputs and outputs, you will need these when parsing the file. Start the jupyer server, then in a new notebook run the following code to parse the uff file into an engine:
+
+```python3
+import tensorrt as trt
+
+max_batch_size = 1
+model_file = 'model.uff'
+TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
+
+with trt.Builder(TRT_LOGGER) as builder, builder.create_network() as network, trt.UffParser() as parser:
+    parser.register_input("input_2", [3, 224, 224])
+    parser.register_output("Logits/Softmax")
+    parser.parse(model_file, network)
+
+    builder.max_batch_size = max_batch_size
+    builder.max_workspace_size = 1 <<  20
+
+    engine = builder.build_cuda_engine(network)
+    with open("sample.engine", "wb") as f:
+        f.write(engine.serialize())
+```
+
+Note that although the output of the conversion script listed the shape of the input as [-1, 3, 224, 224], in order for this to work the input had to be set as [224, 224, 3]. I am not sure why that is the case but its the only way I could get the engine to build. 
+
+
 
 
